@@ -36,7 +36,7 @@ void draw(){
     start_page();//开始页面
   }
   
-  println(start_state);
+  //println(start_state);
 }
 
 
@@ -84,6 +84,7 @@ int play_1_score=0;
 int play_2_score=0;
 int play_speed=5;
 int who=1;
+int level=1;
 
 
 void game_page(){
@@ -100,6 +101,7 @@ void game_page(){
     }
   }
   
+  
   //鼠标控制板子1中点坐标
   if(mouseY>play_1_y){
     play_1_y=play_1_y+play_speed;
@@ -107,6 +109,22 @@ void game_page(){
   if(mouseY<play_1_y){
     play_1_y=play_1_y-play_speed;
   }
+  
+  //击球一定次数后增加球的速度
+  if(level==10){
+    ball_speed=ball_speed+1;
+    println(ball_speed);
+    level=level+1;
+  }
+  if(level==30){
+    ball_speed=ball_speed+1;
+    level=level+1;
+  }
+  if(level==50){
+    ball_speed=ball_speed+1;
+    level=level+1;
+  }
+  
   
   //球在出界临界点与板子坐标的运算
   if(ball_x>775||ball_x<25){
@@ -123,6 +141,8 @@ void game_page(){
       ball_x_direction=-ball_x_direction;
       ball_x_speed=ball_x_direction*ball_speed;
       who=1;
+      level=level+1;
+      println(level);
     }
     else{
       if(play_2_y+40>ball_y&&play_2_y-40<ball_y&&who==1){
@@ -137,6 +157,8 @@ void game_page(){
         ball_x_direction=-ball_x_direction;
         ball_x_speed=ball_x_direction*ball_speed;
         who=2;
+        level=level+1;
+        println(level);
       }
     }
   }
@@ -152,22 +174,26 @@ void game_page(){
     if(who==1){
       ball_x=30;
       ball_y=random(100,500);
-      ball_x_speed=4;
-      ball_y_speed=4;
+      ball_x_speed=ball_speed;
+      ball_y_speed=ball_speed;
       ball_x_direction=1;
       ball_y_direction=1;
       play_1_y=(int)ball_y;
       play_2_y=300;
+      level=1;
+      ball_speed=4;
     }
     if(who==2){
       ball_x=770;
       ball_y=random(100,500);
-      ball_x_speed=-4;
-      ball_y_speed=-4;
+      ball_x_speed=-ball_speed;
+      ball_y_speed=-ball_speed;
       ball_x_direction=-1;
       ball_y_direction=-1;
       play_1_y=300;
       play_2_y=(int)ball_y;
+      level=1;
+      ball_speed=4;
     }
   }
   
